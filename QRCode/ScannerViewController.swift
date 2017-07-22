@@ -11,6 +11,7 @@ import UIKit
 class ScannerViewController: UIViewController {
 
     let scanner = QRCodeScanner()
+    let scannerView = QRCodeScannerView(frame: .zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +19,12 @@ class ScannerViewController: UIViewController {
         view.addSubview(scanner.view)
         scanner.view.fillToSuperview()
         
+        view.addSubview(scannerView)
+        scannerView.fillToSuperview()
+        
         do {
             try scanner.prepareSession()
+            scannerView.startAnimation()
         } catch  {
             print(error.localizedDescription)
         }

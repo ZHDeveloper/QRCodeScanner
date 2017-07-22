@@ -8,16 +8,82 @@
 
 import UIKit
 
-class QRCodeScannerView: UIView {
+public class QRCodeScannerView: UIView {
+    
+    private let contentView = UIView()
+    
+    private let scanBorder = UIImageView()
+    
+    private let scanLine = UIImageView()
+    
+    private var linebottomConst: NSLayoutConstraint!
+    
+    private var isAnimation: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = .clear
+        
+        contentView.backgroundColor = .clear
+        contentView.clipsToBounds = true
+        
+        addSubview(contentView)
+        contentView.anchorCenterSuperview()
+        contentView.anchor(widthConstant: 200, heightConstant: 200)
+        
+        scanBorder.image = #imageLiteral(resourceName: "qrcode_border")
+        contentView.addSubview(scanBorder)
+        scanBorder.fillToSuperview()
+        
+        scanLine.image = #imageLiteral(resourceName: "qrcode_scanline_qrcode")
+        contentView.addSubview(scanLine)
+        scanLine.anchor(left: contentView.leftAnchor, right: contentView.rightAnchor, leftConstant: 4, rightConstant: 4)
+        
+        linebottomConst = scanLine.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: 0)
+        linebottomConst.isActive = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public func startAnimation() {
+        
+        removeAnimation()
+        
+        isAnimation = true
+        
+        UIView.animate(withDuration: 2.0) {
+            UIView.setAnimationRepeatCount(HUGE)
+            self.linebottomConst.constant = 350
+            self.layoutIfNeeded()
+        }
+        
+    }
+    
+    public func removeAnimation() {
+        
+        scanLine.layer.removeAllAnimations()
+        
+        linebottomConst.constant = 0
+        layoutIfNeeded()
+        
+        isAnimation = false
+    }
+    
+    @objc private func applicationDidBecomeActive(_ noti: Notification) {
+        
+        guard isAnimation else { return }
+        
+        startAnimation()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
 }
