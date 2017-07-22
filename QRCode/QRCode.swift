@@ -130,7 +130,7 @@ public class QRCodeGenerator: NSObject {
         
         let codeImage = generateImage(content, targetSize: targetSize)
         
-        guard let maskImage = maskImage?.byRoundCornerRadius(5, borderWidth: 3) else { return codeImage}
+        guard let maskImage = maskImage?.byRoundCornerRadius(10/0.2, borderWidth: 6/0.2) else { return codeImage}
         
         UIImageWriteToSavedPhotosAlbum(maskImage, nil, nil, nil)
         
@@ -177,7 +177,7 @@ fileprivate extension UIImage {
         
         draw(in: rect)
         
-        let maskSize = CGSize(width: size.width * 0.15, height: rect.size.height * 0.15)
+        let maskSize = CGSize(width: size.width * 0.2, height: rect.size.height * 0.2)
         let x = (rect.width - maskSize.width) * 0.5
         let y = (rect.height - maskSize.height) * 0.5
         
