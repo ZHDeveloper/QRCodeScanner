@@ -34,11 +34,13 @@ public class QRCodeScannerView: UIView {
         contentView.anchorCenterSuperview()
         contentView.anchor(widthConstant: 200, heightConstant: 200)
         
-        scanBorder.image = #imageLiteral(resourceName: "qrcode_border")
+        let image = UIImage(named: "QRCode.bundle/qrcode_border")!
+        
+        scanBorder.image = image.stretchableImage(withLeftCapWidth: Int(image.size.width * 0.5), topCapHeight: Int(image.size.width * 0.5))
         contentView.addSubview(scanBorder)
         scanBorder.fillToSuperview()
         
-        scanLine.image = #imageLiteral(resourceName: "qrcode_scanline_qrcode")
+        scanLine.image = UIImage(named: "QRCode.bundle/qrcode_scanline")
         contentView.addSubview(scanLine)
         scanLine.anchor(left: contentView.leftAnchor, right: contentView.rightAnchor, leftConstant: 4, rightConstant: 4)
         
