@@ -135,24 +135,29 @@ public class QRCodeGenerator: NSObject {
         return codeImage?.insertMaskImage(maskImage)
     }
     
-    public class func generateImage(_ content: String, targetSize: CGSize, color: UIColor = .red) -> UIImage? {
+    public class func generateImage(_ content: String, targetSize: CGSize, color: UIColor = .black) -> UIImage? {
         
         let qrFilter = CIFilter(name: "CIQRCodeGenerator")!
         qrFilter.setDefaults()
         qrFilter.setValue(content.data(using: String.Encoding.utf8, allowLossyConversion: false), forKey: "inputMessage")
         
-        guard let ciImage = qrFilter.outputImage else { return nil }
+        guard let ciImage = qrFilter.outputImage,let colorFilter = CIFilter(name: "CIFalseColor") else { return nil }
         
-        let colorFilter = CIFilter(name: "CIFalseColor")!
         colorFilter.setDefaults()
         colorFilter.setValue(ciImage, forKey: "inputImage")
         colorFilter.setValue(CIColor(color: color), forKey: "inputColor0")
-        colorFilter.setValue(CIColor(color: UIColor.white), forKey: "inputColor1")
+        colorFilter.setValue(CIColor(color: .white), forKey: "inputColor1")
         
-        let transform = CGAffineTransform(scaleX: targetSize.width / ciImage.extent.width, y: targetSize.height / ciImage.extent.height)
-        let transformedImage = qrFilter.outputImage!.transformed(by: transform)
+        guard let outImage = colorFilter.outputImage  else { return nil }
         
-        return UIImage(ciImage: transformedImage)
+        let scaleX = targetSize.width / outImage.extent.width;
+        let scaleY = targetSize.height / outImage.extent.height
+        
+        let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        
+        let transformImage = outImage.transformed(by: transform)
+
+        return UIImage(ciImage: transformImage)
     }
     
 }
