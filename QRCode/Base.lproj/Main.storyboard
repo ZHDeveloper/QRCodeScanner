@@ -36,7 +36,7 @@
                                 <rect key="frame" x="148.5" y="368.5" width="77" height="30"/>
                                 <state key="normal" title="识别二维码"/>
                                 <connections>
-                                    <segue destination="jvs-xr-k0k" kind="show" id="vLp-CR-L6t"/>
+                                    <action selector="pickImageAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kIT-mF-9NE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -102,21 +102,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m64-jm-dBq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1694" y="439"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="FR8-a6-44e">
-            <objects>
-                <viewController id="jvs-xr-k0k" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="Xwk-Jo-UMh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="1Lc-2C-fmc"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2x4-PQ-uty" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1044" y="830"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ri4-gy-HY9">

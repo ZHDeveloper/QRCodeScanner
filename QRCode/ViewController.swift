@@ -16,5 +16,7 @@ class ViewController: UIViewController {
         title = "二维码"
     }
     
+    @IBAction func pickImageAction(_ sender: Any) {
+    }
 }
 
