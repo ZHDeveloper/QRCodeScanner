@@ -16,10 +16,11 @@ class QRCodeGenerateViewController: UIViewController {
         super.viewDidLoad()
         
 //        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100))
+//        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100), color: .gray)
+//        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100), maskImage: #imageLiteral(resourceName: "avart"))
+        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100), maskImage: #imageLiteral(resourceName: "avart"), color: .gray)
         
-//        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 200, height: 200), maskImage: #imageLiteral(resourceName: "avart"))
-        
-        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 200, height: 200))
+        print(codeView.image?.size)
     }
 
 }

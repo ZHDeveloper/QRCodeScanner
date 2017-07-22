@@ -166,10 +166,8 @@ fileprivate extension UIImage {
     
     func insertMaskImage(_ image: UIImage) -> UIImage? {
         
-        print(self.size)
-        
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
 
         defer {
             UIGraphicsEndImageContext()
