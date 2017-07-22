@@ -161,20 +161,22 @@ fileprivate extension UIImage {
     
     func insertMaskImage(_ image: UIImage) -> UIImage? {
         
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContext(rect.size)
+        print(self.size)
         
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+
         defer {
             UIGraphicsEndImageContext()
         }
         
         draw(in: rect)
         
-        let avatarSize = CGSize(width: size.width * 0.20, height: rect.size.height * 0.20)
-        let x = (rect.width - avatarSize.width) * 0.5
-        let y = (rect.height - avatarSize.height) * 0.5
+        let maskSize = CGSize(width: size.width * 0.15, height: rect.size.height * 0.15)
+        let x = (rect.width - maskSize.width) * 0.5
+        let y = (rect.height - maskSize.height) * 0.5
         
-        image.draw(in: CGRect(x: x, y: y, width: avatarSize.width, height: avatarSize.height))
+        image.draw(in: CGRect(x: x, y: y, width: maskSize.width, height: maskSize.height))
 
         return UIGraphicsGetImageFromCurrentImageContext()
     }
