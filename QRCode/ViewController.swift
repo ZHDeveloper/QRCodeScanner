@@ -12,7 +12,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    let scanner = ZHScanner()
+    let scanner = QRCodeScanner()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,15 @@ class ViewController: UIViewController {
         view.addSubview(scanner.view)
         scanner.view.fillToSuperview()
         
-        try? scanner.prepareSession()
+        do {
+            try scanner.prepareSession()
+        } catch  {
+            print(error.localizedDescription)
+        }
+        
+        scanner.setFetchHandler {[weak self] (result) in
+            self?.title = result
+        }
     }
     
 }
