@@ -32,7 +32,7 @@ public class QRCodeScanner: NSObject {
     
     public let session = AVCaptureSession()
     
-    private let deviceInput: AVCaptureDeviceInput? = {
+    private var deviceInput: AVCaptureDeviceInput? = {
         guard let device = AVCaptureDevice.default(for: .video) else { return nil}
         let input = try? AVCaptureDeviceInput(device: device)
         return input
@@ -79,7 +79,7 @@ public class QRCodeScanner: NSObject {
     public func toggleFlash() throws {
         
         if !session.isRunning { return }
-
+        
         guard let device = deviceInput?.device else { return }
         
         do {
@@ -101,47 +101,42 @@ public class QRCodeScanner: NSObject {
         }
         device.unlockForConfiguration()
     }
-
-    public func swapCameras() {
+    
+    public func swapCameras() throws {
         
+        if !session.isRunning { return }
         guard let device = deviceInput?.device else { return }
-
+        
+        func cameraDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+            let devices = AVCaptureDevice.devices(for: AVMediaType.video)
+            for aDevice in devices {
+                if aDevice.position == position { return aDevice}
+            }
+            return nil
+        }
+        
         var newDevice: AVCaptureDevice? = nil
         
         if device.position == .back {
-            newDevice = self.cameraDevice(with: .front)
+            newDevice = cameraDevice(with: .front)
         }
         else if device.position == .front {
-            newDevice = self.cameraDevice(with: .back)
+            newDevice = cameraDevice(with: .back)
         }
         
         guard let aDevice = newDevice else { return }
         
         do {
-            let deviceInput = try AVCaptureDeviceInput.init(device: aDevice)
+            let newDeviceInput = try AVCaptureDeviceInput.init(device: aDevice)
             session.beginConfiguration()
-            
-//            sessionInput
-//            
-//            session.removeInput(session.inputs)
-//            session.addInput(deviceInput)
-//            session.commitConfiguration()
-        } catch  {
-            return
+            session.removeInput(deviceInput!)
+            session.addInput(newDeviceInput)
+            session.commitConfiguration()
+            deviceInput = newDeviceInput
+        } catch {
+            throw error
         }
     }
-    
-    private func cameraDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        
-        let devices = AVCaptureDevice.devices(for: AVMediaType.video)
-        
-        for aDevice in devices {
-            if aDevice.position == position { return aDevice}
-        }
-        
-        return nil
-    }
-
     
     deinit {
         dataOutput.setMetadataObjectsDelegate(nil, queue: DispatchQueue.main)
@@ -225,7 +220,7 @@ public class QRCodeGenerator: NSObject {
         let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
         
         let transformImage = outImage.transformed(by: transform)
-
+        
         return UIImage(ciImage: transformImage)
     }
     
@@ -237,7 +232,7 @@ fileprivate extension UIImage {
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-
+        
         defer {
             UIGraphicsEndImageContext()
         }
@@ -249,7 +244,7 @@ fileprivate extension UIImage {
         let y = (rect.height - maskSize.height) * 0.5
         
         image.draw(in: CGRect(x: x, y: y, width: maskSize.width, height: maskSize.height))
-
+        
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
@@ -275,5 +270,6 @@ fileprivate extension UIImage {
         
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-
+    
 }
+
