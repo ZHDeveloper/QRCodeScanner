@@ -128,7 +128,7 @@ public class QRCodeGenerator: NSObject {
     
     public class func generateImage(_ content: String, targetSize: CGSize, maskImage: UIImage?, color: UIColor = .black) -> UIImage? {
         
-        let codeImage = generateImage(content, targetSize: targetSize)
+        let codeImage = generateImage(content, targetSize: targetSize, color: color)
         
         guard let maskImage = maskImage?.byRoundCornerRadius(10/0.2, borderWidth: 6/0.2) else { return codeImage}
         
@@ -193,6 +193,7 @@ fileprivate extension UIImage {
         imageView.layer.borderWidth = borderWidth
         imageView.layer.borderColor = borderColor.cgColor
         imageView.layer.masksToBounds = true
+        imageView.layer.allowsEdgeAntialiasing = true
         
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale);
         defer {
