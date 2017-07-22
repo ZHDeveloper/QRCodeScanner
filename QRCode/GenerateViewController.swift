@@ -16,7 +16,7 @@ class GenerateViewController: UIViewController {
         super.viewDidLoad()
         
 //        codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250))
-//        codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250), color: .gray)
+//        codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250), color: .red)
 //        codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250), maskImage: #imageLiteral(resourceName: "avart"))
         codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250), maskImage: #imageLiteral(resourceName: "avart"), color: .gray)
         
