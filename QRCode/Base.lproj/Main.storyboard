@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Cut-Tl-57g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Xyq-5a-N5h">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -17,19 +17,65 @@
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="emi-l6-MN4">
+                                <rect key="frame" x="148.5" y="318.5" width="77" height="30"/>
+                                <state key="normal" title="生成二维码"/>
+                                <connections>
+                                    <segue destination="Cut-Tl-57g" kind="show" id="TXR-em-Yl7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySW-fy-mOi">
+                                <rect key="frame" x="148.5" y="268.5" width="77" height="30"/>
+                                <state key="normal" title="扫描二维码"/>
+                                <connections>
+                                    <segue destination="txa-g3-a2Q" kind="show" id="l1d-I6-8s8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RCN-7j-dRh">
+                                <rect key="frame" x="148.5" y="368.5" width="77" height="30"/>
+                                <state key="normal" title="识别二维码"/>
+                                <connections>
+                                    <segue destination="jvs-xr-k0k" kind="show" id="vLp-CR-L6t"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ySW-fy-mOi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1pQ-iD-jiA"/>
+                            <constraint firstItem="emi-l6-MN4" firstAttribute="top" secondItem="ySW-fy-mOi" secondAttribute="bottom" constant="20" id="adX-Xk-8co"/>
+                            <constraint firstItem="emi-l6-MN4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bRi-H8-kP0"/>
+                            <constraint firstItem="RCN-7j-dRh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jCu-RS-eoQ"/>
+                            <constraint firstItem="RCN-7j-dRh" firstAttribute="top" secondItem="emi-l6-MN4" secondAttribute="bottom" constant="20" id="oYJ-c5-s06"/>
+                            <constraint firstItem="emi-l6-MN4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vps-LO-oHK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="DXq-b5-Mla"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="580" y="34"/>
+            <point key="canvasLocation" x="919.20000000000005" y="33.733133433283363"/>
         </scene>
-        <!--Code Generate View Controller-->
+        <!--Scanner View Controller-->
+        <scene sceneID="zuu-PM-u2M">
+            <objects>
+                <viewController id="txa-g3-a2Q" customClass="ScannerViewController" customModule="QRCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="SVq-Ag-coF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="hAa-hN-bWi"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GeK-qd-BJk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1694" y="-221"/>
+        </scene>
+        <!--Generate View Controller-->
         <scene sceneID="VIG-V3-9dz">
             <objects>
-                <viewController id="Cut-Tl-57g" customClass="QRCodeGenerateViewController" customModule="QRCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Cut-Tl-57g" customClass="GenerateViewController" customModule="QRCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="DQd-rC-u6b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,7 +101,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m64-jm-dBq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="580" y="747"/>
+            <point key="canvasLocation" x="1694" y="439"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="FR8-a6-44e">
+            <objects>
+                <viewController id="jvs-xr-k0k" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" id="Xwk-Jo-UMh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="1Lc-2C-fmc"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2x4-PQ-uty" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1044" y="830"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ri4-gy-HY9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xyq-5a-N5h" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KMZ-nf-9iE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="qeK-1a-TTB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yZf-0Q-gka" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-233" y="34"/>
         </scene>
     </scenes>
 </document>
