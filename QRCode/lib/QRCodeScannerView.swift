@@ -16,6 +16,8 @@ public class QRCodeScannerView: UIView {
     
     private let scanLine = UIImageView()
     
+    private let mainMaskView = UIView()
+    
     private var linebottomConst: NSLayoutConstraint!
     
     private var isAnimation: Bool = false
@@ -42,6 +44,12 @@ public class QRCodeScannerView: UIView {
         
         linebottomConst = scanLine.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: 0)
         linebottomConst.isActive = true
+
+        mainMaskView.backgroundColor = UIColor.black
+        mainMaskView.alpha = 0.4
+        
+        addSubview(mainMaskView)
+        mainMaskView.fillToSuperview()
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
@@ -69,6 +77,28 @@ public class QRCodeScannerView: UIView {
         layoutIfNeeded()
         
         isAnimation = false
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let path = UIBezierPath()
+        path.append(UIBezierPath(rect: mainMaskView.bounds))
+        
+        let margin: CGFloat = 5
+        let x = contentView.frame.minX + margin
+        let y = contentView.frame.minY + margin
+        let w = contentView.frame.width - margin * 2
+        let h = contentView.frame.height - margin * 2
+        
+        let frame = CGRect(x: x, y: y, width: w, height: h)
+        
+        path.append(UIBezierPath(rect: frame).reversing())
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        
+        mainMaskView.layer.mask = maskLayer
     }
     
     @objc private func applicationDidBecomeActive(_ noti: Notification) {
