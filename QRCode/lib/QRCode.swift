@@ -102,6 +102,46 @@ public class QRCodeScanner: NSObject {
         device.unlockForConfiguration()
     }
 
+    public func swapCameras() {
+        
+        guard let device = deviceInput?.device else { return }
+
+        var newDevice: AVCaptureDevice? = nil
+        
+        if device.position == .back {
+            newDevice = self.cameraDevice(with: .front)
+        }
+        else if device.position == .front {
+            newDevice = self.cameraDevice(with: .back)
+        }
+        
+        guard let aDevice = newDevice else { return }
+        
+        do {
+            let deviceInput = try AVCaptureDeviceInput.init(device: aDevice)
+            session.beginConfiguration()
+            
+//            sessionInput
+//            
+//            session.removeInput(session.inputs)
+//            session.addInput(deviceInput)
+//            session.commitConfiguration()
+        } catch  {
+            return
+        }
+    }
+    
+    private func cameraDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+        
+        let devices = AVCaptureDevice.devices(for: AVMediaType.video)
+        
+        for aDevice in devices {
+            if aDevice.position == position { return aDevice}
+        }
+        
+        return nil
+    }
+
     
     deinit {
         dataOutput.setMetadataObjectsDelegate(nil, queue: DispatchQueue.main)
