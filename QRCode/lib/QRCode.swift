@@ -142,9 +142,17 @@ public class QRCodeScanner: NSObject {
         
         var results: [String?] = []
         
-        guard let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy : CIDetectorAccuracyHigh]),let ciImage = CIImage(image: image) else {
+        /// http://www.jianshu.com/p/c8f1fdf1c3b0
+        /// 将图片缩放到256*256,不然图片可能识别不出来
+        guard let resizeImage = image.resizeTo(CGSize(width: 256, height: 256)) else {
             return results
         }
+        
+        guard let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy : CIDetectorAccuracyHigh]), let cgImage = resizeImage.cgImage else {
+            return results
+        }
+        
+        let ciImage = CIImage(cgImage: cgImage)
         
         let features = detector.features(in: ciImage)
 
@@ -285,6 +293,16 @@ fileprivate extension UIImage {
         }
         
         imageView.layer.render(in: context)
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
+    func resizeTo(_ size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
         return UIGraphicsGetImageFromCurrentImageContext()
     }

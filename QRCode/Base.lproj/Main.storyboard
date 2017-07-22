@@ -89,7 +89,10 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpP-YP-Pjf">
                                 <rect key="frame" x="148.5" y="488.5" width="77" height="30"/>
-                                <state key="normal" title="保存到相册"/>
+                                <state key="normal" title="生成二维码"/>
+                                <connections>
+                                    <action selector="generateAction:" destination="Cut-Tl-57g" eventType="touchUpInside" id="vQJ-0O-Eea"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,6 +104,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nm7-L2-G04"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="codeView" destination="EuD-F7-JCW" id="qQc-Qh-C8x"/>
                     </connections>

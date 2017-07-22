@@ -38,9 +38,15 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         let results = QRCodeScanner.identifyQRCode(image)
         
-        results.forEach {
-            print($0)
+        if results.count > 0 {
+            results.forEach {
+                print($0)
+            }
         }
+        else {
+            print("没有检测到二维码！")
+        }
+        
     }
     
 }
