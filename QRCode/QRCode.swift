@@ -126,45 +126,53 @@ public class QRCodePreviewView: UIView {
 
 public class QRCodeGenerator: NSObject {
     
-    class open func generateImage(_ stringValue: String, avatarImage: UIImage?, avatarScale: CGFloat = 0.25, color: CIColor, backColor: CIColor) -> UIImage? {
+    public class func generateImage(_ content: String, targetSize: CGSize, maskImage: UIImage?, color: UIColor? = nil) -> UIImage? {
         
-        // generate qrcode image
+        let codeImage = generateImage(content, targetSize: targetSize, color: color)
+        
+        guard let maskImage = maskImage else { return codeImage}
+        
+        return codeImage?.insertMaskImage(maskImage)
+    }
+    
+    public class func generateImage(_ content: String, targetSize: CGSize, color: UIColor? = nil) -> UIImage? {
+        
         let qrFilter = CIFilter(name: "CIQRCodeGenerator")!
         qrFilter.setDefaults()
-        qrFilter.setValue(stringValue.data(using: String.Encoding.utf8, allowLossyConversion: false), forKey: "inputMessage")
+        qrFilter.setValue(content.data(using: String.Encoding.utf8, allowLossyConversion: false), forKey: "inputMessage")
         
-        let ciImage = qrFilter.outputImage
+        guard let ciImage = qrFilter.outputImage else { return nil}
         
-        // scale qrcode image
         let colorFilter = CIFilter(name: "CIFalseColor")!
         colorFilter.setDefaults()
         colorFilter.setValue(ciImage, forKey: "inputImage")
-        colorFilter.setValue(color, forKey: "inputColor0")
-        colorFilter.setValue(backColor, forKey: "inputColor1")
+        colorFilter.setValue(CIColor(color: color ?? UIColor.black), forKey: "inputColor0")
+        colorFilter.setValue(CIColor(color: UIColor.white), forKey: "inputColor1")
         
-        let transform = CGAffineTransform(scaleX: 10, y: 10)
+        let transform = CGAffineTransform(scaleX: targetSize.width / ciImage.extent.width, y: targetSize.height / ciImage.extent.height)
         let transformedImage = qrFilter.outputImage!.transformed(by: transform)
         
-        let image = UIImage(ciImage: transformedImage)
-        
-        if avatarImage != nil {
-            return insertAvatarImage(image, avatarImage: avatarImage!, scale: avatarScale)
-        }
-        
-        return image
+        return UIImage(ciImage: transformedImage)
     }
     
-    class func insertAvatarImage(_ codeImage: UIImage, avatarImage: UIImage, scale: CGFloat) -> UIImage {
+}
+
+fileprivate extension UIImage {
+    
+    func insertMaskImage(_ image: UIImage) -> UIImage {
         
-        let rect = CGRect(x: 0, y: 0, width: codeImage.size.width, height: codeImage.size.height)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
         
-        codeImage.draw(in: rect)
+        draw(in: rect)
+        
+        let scale: CGFloat = 0.5
         
         let avatarSize = CGSize(width: rect.size.width * scale, height: rect.size.height * scale)
         let x = (rect.width - avatarSize.width) * 0.5
         let y = (rect.height - avatarSize.height) * 0.5
-        avatarImage.draw(in: CGRect(x: x, y: y, width: avatarSize.width, height: avatarSize.height))
+        
+        image.draw(in: CGRect(x: x, y: y, width: avatarSize.width, height: avatarSize.height))
         
         let result = UIGraphicsGetImageFromCurrentImageContext()
         
@@ -172,5 +180,4 @@ public class QRCodeGenerator: NSObject {
         
         return result!
     }
-    
 }
