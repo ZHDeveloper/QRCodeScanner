@@ -1,5 +1,6 @@
 ## QRCodeScanner
-QRCodeScanner是二维码扫描相关的类，但不提供扫描界面场景，建议根据需求效果图进行添加。QRCodeScannerView则是默认提供的一套UI界面View。
+QRCodeScanner是二维码扫描相关的类，但不提供扫描界面场景，建议根据需求效果图进行添加。使用过程中需要强引用，避免对象提前释放。
+当对象释放时，会停止session，并且将预览图层从父视图中移除。
 
 此类提供的功能：
 
@@ -32,9 +33,17 @@ class ScannerViewController: UIViewController {
 }
 ```
 
+## QRCodeScannerView
+QRCodeScannerView则是默认提供的一套UI界面View。
 
 ## QRCodeGenerator
 QRCodeGenerator是二维码生成类。
+
+特性：
+
+* 自定义二维码内容
+* 二维码颜色
+* 添加个性头像
 
 ```
 codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250))
@@ -43,3 +52,7 @@ codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper",
 codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper", targetSize: CGSize(width: 250, height: 250), maskImage: #imageLiteral(resourceName: "avart"), color: .gray)
 
 ```
+
+## 效果图
+
+![效果图](./WechatIMG9.jpeg)
