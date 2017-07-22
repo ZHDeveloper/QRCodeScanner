@@ -34,7 +34,8 @@ class ScannerViewController: UIViewController {
 ```
 
 ## QRCodeScannerView
-QRCodeScannerView则是默认提供的一套UI界面View。
+QRCodeScannerView则是默认提供的一套UI界面View。实际开发中还是要按照美工给的效果来实现。
+
 
 ## QRCodeGenerator
 QRCodeGenerator是二维码生成类。

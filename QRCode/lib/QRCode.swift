@@ -76,6 +76,33 @@ public class QRCodeScanner: NSObject {
         self.fetchHandler = handler
     }
     
+    public func toggleFlash() throws {
+        
+        if !session.isRunning { return }
+
+        guard let device = deviceInput?.device else { return }
+        
+        do {
+            try device.lockForConfiguration()
+        } catch  {
+            throw error
+        }
+        if device.flashMode == .on {
+            if device.isFlashModeSupported(.off),device.isTorchModeSupported(.off) {
+                device.flashMode = .off
+                device.torchMode = .off
+            }
+        }
+        else if device.flashMode == .off {
+            if device.isFlashModeSupported(.on),device.isTorchModeSupported(.on) {
+                device.flashMode = .on
+                device.torchMode = .on
+            }
+        }
+        device.unlockForConfiguration()
+    }
+
+    
     deinit {
         dataOutput.setMetadataObjectsDelegate(nil, queue: DispatchQueue.main)
         session.stopRunning()
