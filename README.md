@@ -31,6 +31,24 @@ class ScannerViewController: UIViewController {
     }
     
 }
+
+```
+
+本地图片二维码检测：
+
+```
+/// 为什么返回数组？一张图片中可能包含多个二维码。
+let results = QRCodeScanner.identifyQRCode(image)
+    
+if results.count > 0 {
+    results.forEach {
+        print($0!)
+    }
+}
+else {
+    print("没有检测到二维码！")
+}
+
 ```
 
 ## QRCodeScannerView
@@ -66,4 +84,5 @@ codeView.image = QRCodeGenerator.generateImage("https://github.com/ZHDeveloper",
 
 ## 效果图
 
-![效果图](./WechatIMG9.jpeg)
+![效果图1](./WechatIMG12.jpeg)
+![效果图2](./WechatIMG9.jpeg)

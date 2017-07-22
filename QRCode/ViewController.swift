@@ -40,7 +40,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         if results.count > 0 {
             results.forEach {
-                print($0)
+                print($0!)
             }
         }
         else {
