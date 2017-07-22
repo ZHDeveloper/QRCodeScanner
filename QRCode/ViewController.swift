@@ -32,10 +32,14 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
+        picker.dismiss(animated: true, completion: nil)
+        
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         
-        if let message = QRCodeScanner.identifyQRCode(image) {
-            print(message)
+        let results = QRCodeScanner.identifyQRCode(image)
+        
+        results.forEach {
+            print($0)
         }
     }
     

@@ -138,19 +138,22 @@ public class QRCodeScanner: NSObject {
         }
     }
     
-    class func identifyQRCode(_ image: UIImage) -> String? {
+    class func identifyQRCode(_ image: UIImage) -> [String?] {
+        
+        var results: [String?] = []
         
         guard let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy : CIDetectorAccuracyHigh]),let ciImage = CIImage(image: image) else {
-            return nil
+            return results
         }
         
         let features = detector.features(in: ciImage)
+
+        features.forEach { (feature) in
+            let feature = feature as? CIQRCodeFeature
+            results.append(feature?.messageString)
+        }
         
-        if features.count == 0 { return nil }
-        
-        let feature = features.first as? CIQRCodeFeature
-        
-        return feature?.messageString
+        return results
     }
     
     deinit {

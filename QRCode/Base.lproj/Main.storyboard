@@ -87,11 +87,17 @@
                                     <constraint firstAttribute="width" constant="250" id="GYD-UU-wO0"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpP-YP-Pjf">
+                                <rect key="frame" x="148.5" y="488.5" width="77" height="30"/>
+                                <state key="normal" title="保存到相册"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JpP-YP-Pjf" firstAttribute="top" secondItem="EuD-F7-JCW" secondAttribute="bottom" constant="30" id="II8-Yt-jns"/>
                             <constraint firstItem="EuD-F7-JCW" firstAttribute="centerY" secondItem="DQd-rC-u6b" secondAttribute="centerY" id="TH2-M3-bNC"/>
                             <constraint firstItem="EuD-F7-JCW" firstAttribute="centerX" secondItem="DQd-rC-u6b" secondAttribute="centerX" id="bSm-Av-j4A"/>
+                            <constraint firstItem="JpP-YP-Pjf" firstAttribute="centerX" secondItem="DQd-rC-u6b" secondAttribute="centerX" id="pbb-OE-2ma"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nm7-L2-G04"/>
                     </view>
