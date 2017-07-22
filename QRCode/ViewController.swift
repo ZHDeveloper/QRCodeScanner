@@ -17,6 +17,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func pickImageAction(_ sender: Any) {
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+        
+        let pickVC = UIImagePickerController()
+        pickVC.sourceType = .photoLibrary
+        pickVC.delegate = self
+        
+        present(pickVC, animated: true, completion: nil)
     }
 }
 
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        if let message = QRCodeScanner.identifyQRCode(image) {
+            print(message)
+        }
+    }
+    
+}
