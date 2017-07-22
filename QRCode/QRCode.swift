@@ -159,25 +159,23 @@ public class QRCodeGenerator: NSObject {
 
 fileprivate extension UIImage {
     
-    func insertMaskImage(_ image: UIImage) -> UIImage {
+    func insertMaskImage(_ image: UIImage) -> UIImage? {
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
         
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        
         draw(in: rect)
         
-        let scale: CGFloat = 0.5
-        
-        let avatarSize = CGSize(width: rect.size.width * scale, height: rect.size.height * scale)
+        let avatarSize = CGSize(width: size.width * 0.20, height: rect.size.height * 0.20)
         let x = (rect.width - avatarSize.width) * 0.5
         let y = (rect.height - avatarSize.height) * 0.5
         
         image.draw(in: CGRect(x: x, y: y, width: avatarSize.width, height: avatarSize.height))
-        
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return result!
+
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }

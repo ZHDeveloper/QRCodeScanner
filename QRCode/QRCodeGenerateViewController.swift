@@ -15,7 +15,9 @@ class QRCodeGenerateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100))
+//        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100))
+        
+        codeView.image = QRCodeGenerator.generateImage("www.baidu.com", targetSize: CGSize(width: 100, height: 100), maskImage: #imageLiteral(resourceName: "avart"))
         
     }
 
