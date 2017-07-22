@@ -130,7 +130,9 @@ public class QRCodeGenerator: NSObject {
         
         let codeImage = generateImage(content, targetSize: targetSize)
         
-        guard let maskImage = maskImage else { return codeImage}
+        guard let maskImage = maskImage?.byRoundCornerRadius(5, borderWidth: 3) else { return codeImage}
+        
+        UIImageWriteToSavedPhotosAlbum(maskImage, nil, nil, nil)
         
         return codeImage?.insertMaskImage(maskImage)
     }
@@ -183,4 +185,27 @@ fileprivate extension UIImage {
 
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+    
+    func byRoundCornerRadius(_ radius: CGFloat, borderWidth: CGFloat = 0, borderColor: UIColor = .white) -> UIImage? {
+        
+        let imageView = UIImageView(image: self)
+        imageView.layer.cornerRadius = radius
+        imageView.layer.borderWidth = borderWidth
+        imageView.layer.borderColor = borderColor.cgColor
+        imageView.layer.masksToBounds = true
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale);
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        
+        imageView.layer.render(in: context)
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+
 }
